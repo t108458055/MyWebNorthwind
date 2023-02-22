@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyWebNorthwind.Models;
-using System.Diagnostics;
-
+﻿
 namespace MyWebNorthwind.Controllers
 {
     public class HomeController : Controller

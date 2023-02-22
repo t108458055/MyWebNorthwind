@@ -1,6 +1,4 @@
 //建立IHost   //2022->webisbuilder
-using Microsoft.EntityFrameworkCore;
-using MyWebNorthwind.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 // 加入 DbContext 服務

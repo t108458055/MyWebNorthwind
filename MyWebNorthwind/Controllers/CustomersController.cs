@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyWebNorthwind.Models;
 
 namespace MyWebNorthwind.Controllers
 {

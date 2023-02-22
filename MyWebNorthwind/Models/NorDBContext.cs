@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyWebNorthwind.Models.Entities;
-
+﻿
 namespace MyWebNorthwind.Models
 {
     //規劃一個Persistence持久層框架(mapping 實體資料庫) 繼承 DbContext
