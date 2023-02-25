@@ -20,6 +20,13 @@ namespace MyWebNorthwind.Controllers
             return View();
         }
 
+        public IActionResult StringQuery()
+        {
+            return Content("連接成功");
+        }
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

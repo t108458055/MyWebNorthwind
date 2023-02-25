@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["Title"] = "Employeeeee";
+}
+
+@*使用CDN端*@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div class="text-center">
+    <h1 class="display-4">員工資料</h1>
+    <table id="t1" class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">姓名</th>
+                <th scope="col">生日</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <!--這是JS 產生-->
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+            </tr>
+            <!--這是用Vue綁定 產生-->
+            <tr v-for="item in user">
+                <th scope="row">{{item.id}}</th>
+                <td>{{item.name}}</td>
+                <td>{{item.brithDay}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /** //---------------這是 fetch 寫法---------//
+    //fetch API ("相對位址").then一個方法之函示(回應) {回傳 response成json} .then 一個函式 結果
+    fetch("/user/getall")
+        .then(function (response) { return response.json() })  //這一串為承諾promise
+        .then(function (result) {
+            console.table(result);  //產生 table顯示
+            console.log(result);    //直接顯示 //array
+            //使用for迴圈 寫入資料至html
+            for (var i=0; i < result.length; i++){
+                //抓取 hrml元素
+                var tr = document.createElement("tr");
+
+                var th = document.createElement("th");
+                //設置元素 位置 與controller定義
+                th.setAttribute("scope", "row");
+                th.textContent = result[i].id;
+
+                var td = document.createElement("td");
+                td.textContent = result[i].name;
+                var td2 = document.createElement("td");
+                td2.textContent = result[i].brithDay;
+
+                tr.append(th);
+                tr.append(td);
+                tr.append(td2);
+
+                var tbody = document.getElementsByTagName("tbody")[0];
+                tbody.append(tr);
+            }
+
+
+
+        });       //產生結果至主控台*/
+
+    /** //---------------這是 axios 寫法---------//
+     axios.get("/user/getall").then(function (res) {
+         console.log(res.data);
+         var result = res.data;
+         for (var i = 0; i < result.length; i++) {
+             //抓取 hrml元素
+             var tr = document.createElement("tr");
+
+             var th = document.createElement("th");
+             //設置元素 位置 與controller定義
+             th.setAttribute("scope", "row");
+             th.textContent = result[i].id;
+
+             var td = document.createElement("td");
+             td.textContent = result[i].name;
+             var td2 = document.createElement("td");
+             td2.textContent = result[i].brithDay;
+
+             tr.append(th);
+             tr.append(td);
+             tr.append(td2);
+
+             var tbody = document.getElementsByTagName("tbody")[0];
+             tbody.append(tr);
+         }
+
+
+     });*/
+
+    /** //---------------這是 JQuery 寫法---------//
+    $.ajax("/user/getall")
+      .done(function (result) {
+          for (var i = 0; i < result.length; i++) {
+              //抓取 hrml元素
+              var tr = document.createElement("tr");
+
+              var th = document.createElement("th");
+              //設置元素 位置 與controller定義
+              th.setAttribute("scope", "row");
+              th.textContent = result[i].id;
+
+              var td = document.createElement("td");
+              td.textContent = result[i].name;
+              var td2 = document.createElement("td");
+              td2.textContent = result[i].brithDay;
+
+              tr.append(th);
+              tr.append(td);
+              tr.append(td2);
+
+              var tbody = document.getElementsByTagName("tbody")[0];
+              tbody.append(tr);
+          }
+
+      })*/
+
+
+
+
+    fetch("/UserList/GetAll")
+        .then(function (response) { return response.json() })
+        .then(function (result) { DisplayData(result) });
+
+    axios.get("/UserList/GetAll").then(function (res) { DisplayData(res.data); });
+    //使用ajax方法 呼叫 函式 DisplayData
+    $.ajax("/UserList/GetAll").done(function (result) { DisplayData(result); });
+    //創建 一個函式作展示 資料呈現
+    function DisplayData(data) {
+        for (var i = 0; i < data.length; i++) {
+            //抓取 hrml元素
+            var tr = document.createElement("tr");
+
+            var th = document.createElement("th");
+            //設置元素 位置 與controller定義
+            th.setAttribute("scope", "row");
+            th.textContent = data[i].id;
+
+            var td = document.createElement("td");
+            td.textContent = data[i].name;
+            var td2 = document.createElement("td");
+            td2.textContent = data[i].brithDay;
+
+            tr.append(th, td, td2);
+
+            document.getElementsByTagName("tbody")[0].append(tr);
+        }
+    }
+</script>
+
+<script>
+    ///**產生 一個Vue物件 */
+    //var app5 = new Vue({
+    //    el: '#t1',  //綁定
+    //    data: {
+    //        user: []
+    //    },
+
+    //    //綁定 函式
+
+    //    mounted: function () {
+    //        let self = this;
+
+    //    }
+
+    //});
+    const { createApp } = Vue //建立一個Vue實體物件
+    const app = createApp({        
+        data() { // bind data 
+            return {
+                user: []
+            }
+        },
+        mounted: () =>{
+                    //使用axios 方法 抓取 資料 至 前端 處理
+                    axios.get("/UserList/GetAll").then(function (res) { self.user = res.data });
+        
+        }
+
+    })
+
+
+    app.mount('#t1') //綁定元素
+
+</script>

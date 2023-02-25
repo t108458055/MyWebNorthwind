@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "雷蛇語法";
+}
+<h1>@ViewData["Title"]</h1>
+@*<a href="@Url.Action("StringQuery", "Home", new {id=0})">隱私</a>*@
+<a href="@Url.Action("StringQuery", "Home", new {id=0})">隱私</a>
+<button id="demo"> Haha</button>
+
+
+
+
+<script type="text/javascript">
+    //ref:https://www.w3schools.com/jsref/met_document_getelementbyid.asp
+    //ref:https://stackoverflow.com/questions/3316207/add-onclick-event-to-newly-added-element-in-javascript
+    document.getElementById("demo").onclick = () => { alert('進入事件'); mylink() }
+
+    // btnHaHa.oncclick(()=>{console.log('幾集')});
+    function mylink() {
+        console.log('dd');
+        var url = '@Url.Action("StringQuery", "Home", new {id = 0})';
+        var controller = '控制器';
+        var action = '動作';
+        var getUrl = url.replace('StringQuery', action).replace('Home', controller);
+        console.log(url);
+        console.log(getUrl);
+    }
+        //     var jsUrl = '@Url.Action("action", "controller")'; // ## is the token
+        //var getUrl = jsUrl.replace('action', action).replace('controller', controller)
+        //$("#RenderPartial").load(getUrl);
+
+</script>

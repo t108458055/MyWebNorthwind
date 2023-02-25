@@ -1,0 +1,110 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+        ViewData["Title"] = "Vue 應用";
+    }
+<h1>@ViewData["Title"]</h1>
+@*使用CDN端*@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<fieldset id="app">
+    <div>{{message}}</div>
+    <a>運算處理</a>
+    <!--做加減乘除-->
+    <h1>5X100/10={{5*100/10}}</h1>
+            <div>國家別</div>
+    <select>
+            <option v-for="item in country" value="{{item}}"> 
+                {{item}}
+            </option>
+        </select>
+    <div>您挑選的員工:{{selectEmp}}</div>
+        <div>員工</div>
+    <select v-on:change="selectItemHandler" v-model="selectEmp">
+         <option v-for="(item,index) in employees" v-bind:text="item.id">
+            {{item.name}}
+        </option>
+        </select>
+
+
+    <hr />
+    <input v-model="cust.companyName"/><!--雙向綁定-->
+    <input v-model="cust.address" />
+    <br />
+    <h1>您所輸入的客戶名稱:{{cust.companyName}}</h1>
+    <button id="btnGo1" v-on:click="clickMe()">按我alert</button>
+    <hr />
+     <h1>單元計算computed</h1>
+    <br>
+    <p>1日幣=0.278台幣</p>
+    <div>台幣<input type="text" v-model="twd" /></div>
+    <div>日幣<input type="text" v-model="jpy" /></div>
+    {{ message }}
+    <a>監聽watch此INPUT</a>
+    <div><input type="text" v-model="message" /></div>
+</fieldset>
+
+<script type="text/javascript">
+        //建立JS 物件 客戶
+        var customers = {
+            customerID: '001',
+            companyName: '哈囉!世界和平!',
+            address: '中山北路87巷78號',
+            phone: '0911123321'
+        };
+
+
+    const { createApp } = Vue //建立一個Vue實體物件
+    const app = createApp({        
+        data() { // bind data 
+            return {
+                count: 0,
+                message: 'Hello Vue!',
+                cust: customers,
+                twd: 0.278,
+                selectEmp: '',
+                country: ['美國', '台灣', '中國', '日本', '韓國'], // this array
+                employees: [{ id: '001', name: '張三豐' },  //this object in array
+                                    { id: '002', name: '張無忌' },
+                                    { id: '003', name: '張曉峰' }],
+            }
+        },
+
+        methods: {  //method use function
+            clickMe: function () {
+                let result = 'hello!Vue!!~';
+                   console.log(result);
+                          alert(result);
+            }, 
+             selectItemHandler: function () {
+                 //alert();
+                   console.log('動作');
+             }
+        },
+
+        computed: {  //Computed function
+            jpy:{
+                get() {
+                    return Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+                },
+                set(val){
+                    return Number.parseFloat(Number(val) * 0.278).toFixed(3);
+                }
+            },
+
+        },
+
+        watch: {
+              //被偵聽的資料名稱(新值,舊值){}
+            message(newMsg, oldMsg) {
+                console.log('newMsg', newMsg)
+                console.log('oldMsg', oldMsg)
+            }
+
+        }
+
+    })
+
+    app.mount('#app') //綁定元素
+</script>
