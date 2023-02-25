@@ -15,7 +15,7 @@ global using global::System.Net.Http;
 global using global::System.Net.Http.Json;
 global using global::System.Threading;
 global using global::System.Threading.Tasks;
-// this project
+// this project  //專案使用全域 using
 global using global::System.ComponentModel.DataAnnotations;
 global using global::System.Diagnostics;
 global using global::Microsoft.AspNetCore.Mvc;
@@ -23,3 +23,4 @@ global using global::MyWebNorthwind.Models;
 
 global using global::Microsoft.EntityFrameworkCore;
 global using global::MyWebNorthwind.Models.Entities;
+global using global::MyWebNorthwind.Utilities;

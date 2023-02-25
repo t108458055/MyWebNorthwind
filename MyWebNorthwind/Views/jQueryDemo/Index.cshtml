@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "jQuery 核心語法練習";
+}
+
+<script type="text/javascript">
+    // 開始使用JQ
+    //聆聽網頁物件下載之後引發之事件(jQuery採用 CSS Selector選擇器)
+    //document (jQuery framework) 變數-代表是一個Document文件物件(整個網頁)
+
+    //$(document).ready();
+    $(document).ready(
+        //埋入一段function
+        function () {
+            $('#name').val('張泰山'); //找尋id是name綁定此值 並將Jquery min.js 移到header裡進行呼叫
+            //隱藏HTML的對話盒區塊
+            $('#panel').hide();
+            // alert('HI jQuey...'); jQuery打聲招呼
+            //選擇器挑選到按鈕物件
+            var button = $('#btnGo'); // 他是一個物件 使用typeof可以知道他是什麼東東
+            //alert(typeof button); 使用window.alert 方法 來觀察此命名的型態
+            //埋入按鈕的click 事件
+            button.click(
+                // 埋入事件是程序
+                function () {
+                    //  alert('Click Me...'); //確認函示是否動作
+                    var name = $('#name').val(); // 函數具有相向 可以設定 可以取得
+                    alert('您輸入的姓名:' + name); // 呼叫 window.alert
+                    console.log(typeof name); //型別是 string 字串
+                }
+            );
+            /**
+            *  add script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js">
+             *
+             */
+            // 增加對話盒 按鈕 選取 引發事件
+            $('#btnDialog').click(
+                //事件程序
+                function () {
+                    // //選擇器挑選對話和區域 設定對話盒屬性 參數做傳遞JavaScript物件
+                    $('#panel').dialog(
+                        {
+                            modal: true,
+                            show: {
+                                effect: "blind",
+                                duration: 1000
+                            },
+                            hide: {
+                                effect: "explode",
+                                duration: 1000
+                            },
+                            buttons: {
+                                關閉: function () {
+                                    $('#panel').dialog('close');
+                                },
+                                取消: function () {
+
+                                }
+                            }
+                        }
+                    );
+
+                }
+            );
+        }
+    );
+
+</script>
+<!--Step 1 建立HTML語法-->
+<div><h3>jQuery語法練習</h3></div>
+<div><a>姓名</a></div>
+<input type="text" id="name" />
+<button id="btnGo"> 觸發...</button>
+<br />
+<button id="btnDialog">呈現對話盒</button>
+<!--Step 2 埋入一個對話頁面-->
+@*設計對話盒*@
+<div id="panel" title="客戶資料">
+    <div><a>客戶編號</a></div>
+    <input type="text" readonly />
+    <div><a>公司行號</a></div>
+    <input type="text" readonly />
+
+</div>
+
+
+<h1>Get Session Value</h1>
+    Session:
+<input type="text" id="txtSessionName" placeholder="Please input Person" />
+<input type="button" id="btnGet" value="Get Session" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnGet").click(function () {
+            $.ajax({
+                type: "POST", //使用 POST 
+                url: "/jQueryDemo/AjaxMethod", // 到哪???要什麼?
+                data: { "sessionName": $("#txtSessionName").val() }, //綁定值
+                success: function (response) { //成功的話
+                    if (response != null) {
+                        alert(response);
+                    } else {
+                        alert("Session 物件沒有!!");
+                    }
+                },
+                failure: function (response) { //失敗的話
+                    alert(response.responseText);
+                },
+                error: function (response) { //錯誤的話
+                    alert(response.responseText);
+                }
+            });
+        });
+    });
+</script>

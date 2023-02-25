@@ -1,0 +1,32 @@
+﻿@model System.Collections.Generic.List<MyWebNorthwind.Models.Entities.Customers> //使用model，呼叫後端的建構子給前端做承載使用
+
+@* 
+    這頁就是表示的view呈現客戶資料清單  
+*@
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <td>詳細資料</td>
+            <td>客戶編號</td>
+            <td>公司行號</td>
+            <td>聯絡地址</td>
+            <td>連絡電話</td>
+            <td>國家別</td>
+        </tr>
+    </thead>
+    <tbody>
+        @*使用Razor 語法做為渲染方式*@
+        @foreach (var customer in Model)
+        {
+            <tr>
+                @*前端操作*@
+                <td><button id="detail" customerid="@customer.CustomerID">詳細資料</button></td>
+                <td>@customer.CustomerID</td>
+                <td>@customer.CompanyName</td>
+                <td>@customer.Address</td>
+                <td>@customer.Phone</td>
+                <td>@customer.Country</td>
+            </tr>
+        }
+    </tbody>
+</table>

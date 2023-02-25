@@ -6,6 +6,9 @@ builder.Services.AddDbContext<NorDBContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("northwind"));
 });
 // Add services to the container.
+//加入自定義的類別(Class)變成一個服務物件 並使用Singleton()單例模式物件 相依性插入 ref:https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
+builder.Services.AddSingleton<DbServiceUtility>(); // 單例模式物件
+builder.Services.AddSession(); // /加入Session 狀態服務 (配合瀏覽器進來第一個端點,後端準備到一個 ISession物件給你,同時送出前端Cookie(SessionID))
 //加入Cors策略(後面middleware 要使用
 builder.Services.AddCors(options =>
 {   //Lambda
@@ -29,11 +32,12 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();//強制加密連線
 app.UseStaticFiles();
 // 使用Route
-app.UseRouting(); 
+app.UseRouting();
 //使用Cors Policy
 app.UseCors("allsites"); //policy name  客製化(前面設定的)
 app.UseAuthentication(); //認證
 app.UseAuthorization(); //授權
+app.UseSession(); //加入 Session
 //地圖控制器敘述
 app.MapControllerRoute(
     name: "default",

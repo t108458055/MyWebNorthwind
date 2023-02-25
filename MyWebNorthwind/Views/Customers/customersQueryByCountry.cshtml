@@ -1,0 +1,143 @@
+﻿@model System.Collections.Generic.List<MyWebNorthwind.Models.Entities.Customers> //使用model，呼叫後端的建構子做使用
+
+
+@{ //這裡開始是雷蛇Razor語法 可以使用C#寫前端
+    ViewData["Title"] = "客戶查詢-國家別";
+    //將動態類型明確地做轉型危集合物件<泛型>
+    var data = this.ViewBag.Data as List<SelectListItem>; //下拉式選單
+                                                          //進行Model(List) 物件序列化成字串
+                                                          //String decodeString = "[]";
+    String jsonString = "[]";
+    String isDetail = "0";
+    if (Model != null)
+    {
+        jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
+        isDetail = "1";
+        //   如何 HTML Decode jsonString {"xxx","xxx"}  key value
+        //decodeString = System.Net.WebUtility.HtmlDecode(jsonString);
+    }
+}
+<script type="text/javascript">
+    //透過jQuery Selector 選擇文件之物件
+    $(document).ready(  //網頁初始化事件程序       
+        function() {            
+            $('#panel').hide(); //選擇對話盒面板
+        }
+    );
+</script>
+
+<fieldset>
+    <legend>@ViewData["Title"]</legend>
+    @*使用HTML Helper設計表單頁面*@
+    @*BeginForm產生 <form>...</form>*@
+    @using (Html.BeginForm())
+    {
+        <div>國家別</div>
+        //使用程式架構(Server端 C#)產生下拉式功能表(前端讀的到標籤) (進行國家別資料綁定)
+        @Html.DropDownList("country", data,"請挑選下列國家別", new {@class="custom-select", tag="country"})
+        <input type="submit" value="查詢" class="btn btn-link" />
+    }
+    @*確定有查詢結果*@
+    @if (Model != null)
+    {
+        @*使用partial View*@
+        @Html.Partial("CustomersDataList", Model)　// 建立一個Razor Page *.cshtml
+    }
+    @*對話盒面板*@
+    <div id="panel" title="客戶詳細資料">
+        <div>
+            <table>
+                <tr>
+                    <td>客戶編號</td>
+                    <td><input type="text" id="rcustomerId" readonly /></td>
+                </tr>
+                <tr>
+                    <td>公司行號</td>
+                    <td><input type="text" id="rcompanyName" readonly /></td>
+                </tr>
+                <tr>
+                    <td>聯絡地址</td>
+                    <td><input type="text" id="raddress" readonly /></td>
+                </tr>
+                <tr>
+                    <td>電話</td>
+                    <td><input type="text" id="rphone" readonly /></td>
+                </tr>
+                <tr>
+                    <td>國家別</td>
+                    <td><input type="text" id="rcountry" readonly /></td>
+                </tr>
+                <tr>
+                    <td>聯絡人姓名</td>
+                    <td><input type="text" id="rcontactName" readonly /></td>
+                </tr>
+                <tr>
+                    <td>聯絡人職稱</td>
+                    <td><input type="text" id="rcontactTitle" readonly /></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+    </div>
+    <script type="text/javascript">
+
+                var currentCID; // Global variable
+                //產生一個配合查詢多筆多欄的JavaScript物件 Decode String
+                var customersList =@Html.Raw(jsonString);
+                console.log(typeof customersList); //typeof型別確認
+                //定義函數當作Event Procedure e-Event Source
+                function showDetails(e) {
+                    //console.log(e.getAttribute("customerid"));
+                    //按鈕按發之後,產生特別自訂customerid attribute取出相對應客戶編號
+                   // currentCID = e.getAttribute("customerid");
+                    console.log(customersList);
+                    //前端物件模組查詢 customersList
+                    //JavaScript array find(callback) method # 逐筆傳遞過去驗證
+                    var result = customersList.find(customerFind);
+                    //使用jQuery core selector
+                $('#rcustomerId').val(result.customerID);
+                $('#rcompanyName').val(result.companyName);
+                $('#raddress').val(result.address);
+                $('#rphone').val(result.phone);
+                $('#rcountry').val(result.country);
+                $('#rcontactName').val(result.contactName);
+                $('#rcontactTitle').val(result.contactTitle);
+                console.log(result);
+                // TODO Render UI　(渲染畫面)
+                // 設定對話盒特性
+                $('#panel').dialog(
+                    {
+                        width: 400,
+                        height: 350,
+                        modal: true,
+                        buttons: {
+                            關閉: function () {
+                                $('#panel').dialog('close');
+                            }
+                        }
+                    }
+                ); }
+          //前端結果array 配合按鈕觸發相對客戶編號進行篩選(callback)
+            function customerFind(customer) {
+                //進行判斷
+                return customer.customerID == currentCID;
+            }
+        if (@Html.Raw(isDetail=="1").ToString().ToLower()) {
+            //參考出partial view 中的按鈕(選項按鈕)
+            var selButton = document.getElementById('detail');
+
+            ////TODO 埋入事件程序(改成MVVM工程來寫)
+            selButton.addEventListener('click',
+               function () {
+                    //取出這一個按鈕屬性customerid
+                    var cid = this.attributes["customerid"];
+                    console.log(cid);
+                        $('#panel').show();
+                }
+            );
+        } //if conditional
+
+    </script>
+
+</fieldset>
