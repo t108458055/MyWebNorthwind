@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MyWebNorthwind</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MyWebNorthwind.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"><!-- 加入jQuery UI-->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" asp-append-version="true"><!-- 加入jQuery UI-->
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
 </head>
 <body>
     <header>
@@ -46,8 +46,8 @@
             &copy; 2023 - MyWebNorthwind - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*  asp-append-version ref:https://www.c-sharpcorner.com/blogs/aspappendversion-feature-in-asp-net-core*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
