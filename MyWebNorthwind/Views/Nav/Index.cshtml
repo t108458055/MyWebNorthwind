@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@*<h1>Nav</h1>*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>導覽列</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // 發送 AJAX 請求，取得超連結位址列表
+            $.ajax({
+                //url: "api/getLinks",
+                url: "/getLinks",
+                success: function (data) {
+                    // 將超連結位址列表加入到導覽列中
+                    for (var i = 0; i < data.length; i++) {
+                        var link = $("<a></a>").attr("href", data[i]).text(data[i]);
+                        $("nav").append(link);
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <!-- 在這裡動態加載超連結位址 -->
+    </nav>
+</body>
+</html>
