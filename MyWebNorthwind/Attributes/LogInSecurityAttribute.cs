@@ -13,7 +13,7 @@ namespace MyWebNorthwind.Attributes
             string credValue = httpRequest.Cookies[".cred"]; //取出Cookie 內容 值 .cred
             if (String.IsNullOrEmpty(credValue))
             {
-                //建構一個新的HttpResponse物件,換掉原先配對的Response;
+                //建構一個新的HttpResponse物件,換掉原先配對的Response
                 actionExecutingContext.Result = new UnauthorizedObjectResult("沒有通行憑證");
             }
             else
