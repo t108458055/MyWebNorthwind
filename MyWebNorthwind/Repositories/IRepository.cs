@@ -4,7 +4,9 @@
     {
         List<T> FetchAll();
         IQueryable<T> Query { get; }
+        T Get(int id);
         void Add(T entity);
+        void Update(T entity);  
         void Delete(T entity);
         void Save();
     }

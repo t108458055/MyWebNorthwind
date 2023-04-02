@@ -1,5 +1,7 @@
 //建立IHost   //2022->webisbuilder
 
+using MyWebNorthwind.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 // 加入 DbContext 服務
 builder.Services.AddDbContext<NorDBContext>(options => {
@@ -8,6 +10,8 @@ builder.Services.AddDbContext<NorDBContext>(options => {
 // Add services to the container.
 //加入自定義的類別(Class)變成一個服務物件 並使用Singleton()單例模式物件 相依性插入 ref:https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
 builder.Services.AddSingleton<DbServiceUtility>(); // 單例模式物件
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<CustomersRepository<Customers>>();
 builder.Services.AddSession(); // /加入Session 狀態服務 (配合瀏覽器進來第一個端點,後端準備到一個 ISession物件給你,同時送出前端Cookie(SessionID))
 //加入Cors策略(後面middleware 要使用
 builder.Services.AddCors(options =>

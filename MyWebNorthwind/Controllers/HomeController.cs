@@ -1,17 +1,25 @@
 ﻿
+using MyWebNorthwind.Repositories;
+
 namespace MyWebNorthwind.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly CustomersRepository<Customers> _customersRepository;
+        private readonly NorDBContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, CustomersRepository<Customers> customersRepository, NorDBContext dbContext)
         {
             _logger = logger;
+            _customersRepository = customersRepository;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
         {
+             var customers=_customersRepository.FetchAll();
+            var dfs=_dbContext.Customers.ToList();
             return View();
         }
 
