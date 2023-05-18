@@ -91,6 +91,14 @@
 <script type="text/javascript">
     $(function () {
         $("#btnGet").click(function () {
+            let inputtxtSessionName = $('#txtSessionName').val();
+            if (!inputtxtSessionName)
+            {
+                    alert('不能為空值!!')
+                    return;
+            }
+
+
             $.ajax({
                 type: "POST", //使用 POST 
                 url: "/jQueryDemo/AjaxMethod", // 到哪???要什麼?

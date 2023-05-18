@@ -18,8 +18,8 @@ namespace MyWebNorthwind.Controllers
 
         public IActionResult Index()
         {
-             var customers=_customersRepository.FetchAll();
-            var dfs=_dbContext.Customers.ToList();
+          //   var customers=_customersRepository.FetchAll();
+           // var dfs=_dbContext.Customers.ToList();
             return View();
         }
 
