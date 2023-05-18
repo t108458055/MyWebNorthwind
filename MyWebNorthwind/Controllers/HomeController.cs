@@ -18,18 +18,21 @@ namespace MyWebNorthwind.Controllers
 
         public IActionResult Index()
         {
-          //   var customers=_customersRepository.FetchAll();
-           // var dfs=_dbContext.Customers.ToList();
+            _logger.LogInformation("Info");
+            //   var customers=_customersRepository.FetchAll();
+            // var dfs=_dbContext.Customers.ToList();
             return View();
         }
 
         public IActionResult Privacy()
         {
+            _logger.LogInformation("Info");
             return View();
         }
 
         public IActionResult StringQuery()
         {
+            _logger.LogInformation("Info");
             return Content("連接成功");
         }
 
@@ -38,6 +41,7 @@ namespace MyWebNorthwind.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            _logger.LogInformation("Info");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

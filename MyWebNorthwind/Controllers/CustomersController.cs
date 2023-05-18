@@ -10,15 +10,16 @@ namespace MyWebNorthwind.Controllers
         //Data Field
         private readonly NorDBContext _dbContext;
         private readonly DbServiceUtility _dbServiceUtility;
+        private readonly ILogger<CustomersController> _logger;
         // 自訂建構子 注入(DI)  物件 (singleton模式 單例物件 獨一性質)
-        public CustomersController(NorDBContext norDBContext, DbServiceUtility dbServiceUtility)
+        public CustomersController(NorDBContext norDBContext, DbServiceUtility dbServiceUtility, ILogger<CustomersController> logger)
         {
             Console.WriteLine("CustomersController控制物件產生");
-            this._dbContext= norDBContext;
+            this._dbContext = norDBContext;
             Console.WriteLine($"Customers控制物件產生：{_dbContext}...");
-            this._dbServiceUtility= dbServiceUtility;
+            this._dbServiceUtility = dbServiceUtility;
             Console.WriteLine($"服務物件產生：{_dbServiceUtility}");
-
+            this._logger = logger;
         }
         public IActionResult Index()
         {
@@ -36,7 +37,8 @@ namespace MyWebNorthwind.Controllers
 
         // 調用查詢的表單 跟進行查詢輸出 寫在同一個入口 END POINT
         public IActionResult customersQryById(String customerID)    // 客戶查詢作業
-        {           
+        {
+            _logger.LogInformation("Info");
             if (!String.IsNullOrEmpty(customerID))
             {   
                 Console.WriteLine($"查詢內容：{customerID}");  // 進行相對客戶資料查詢               
@@ -150,6 +152,7 @@ namespace MyWebNorthwind.Controllers
         //客戶資料新增作業
         public IActionResult customersForm()
         {
+            _logger.LogInformation("Info");
             return View();// 調用 Razor Page
         }
 
