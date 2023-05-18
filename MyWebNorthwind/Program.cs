@@ -1,6 +1,8 @@
 //建立IHost   //2022->webisbuilder
 
 using MyWebNorthwind.Repositories;
+using static System.Net.Mime.MediaTypeNames;
+using System.Diagnostics.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 // 加入 DbContext 服務
@@ -12,7 +14,14 @@ builder.Services.AddDbContext<NorDBContext>(options => {
 builder.Services.AddSingleton<DbServiceUtility>(); // 單例模式物件
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<CustomersRepository<Customers>>();
-builder.Services.AddSession(); // /加入Session 狀態服務 (配合瀏覽器進來第一個端點,後端準備到一個 ISession物件給你,同時送出前端Cookie(SessionID))
+builder.Services.AddSession( options => {    
+    // After deployment of ASP.NET Core 2.2 application to IIS sessions using HttpContext.Session aren't working - Stack Overflow
+   // https://stackoverflow.com/questions/54578613/after-deployment-of-asp-net-core-2-2-application-to-iis-sessions-using-httpconte
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+
+}); // /加入Session 狀態服務 (配合瀏覽器進來第一個端點,後端準備到一個 ISession物件給你,同時送出前端Cookie(SessionID))
 //加入Cors策略(後面middleware 要使用
 builder.Services.AddCors(options =>
 {   //Lambda
