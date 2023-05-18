@@ -23,10 +23,10 @@
                 <td>Otto</td>
             </tr>
             <!--這是用Vue綁定 產生-->
-            <tr v-for="item in user">
+@*            <tr v-for="item in user">
                 <th scope="row">{{item.id}}</th>
                 <td>{{item.name}}</td>
-                <td>{{item.brithDay}}</td>
+                <td>{{item.brithDay}}</td>*@
             </tr>
         </tbody>
     </table>
@@ -126,13 +126,13 @@
 
 
 
-    fetch("/UserList/GetAll")
-        .then(function (response) { return response.json() })
-        .then(function (result) { DisplayData(result) });
+    //fetch("/UserList/GetAll")
+    //    .then(function (response) { return response.json() })
+    //    .then(function (result) { DisplayData(result) });
 
-    axios.get("/UserList/GetAll").then(function (res) { DisplayData(res.data); });
+    //axios.get("/UserList/GetAll").then(function (res) { DisplayData(res.data); });
     //使用ajax方法 呼叫 函式 DisplayData
-    $.ajax("/UserList/GetAll").done(function (result) { DisplayData(result); });
+    $.ajax("UserList/GetAll").done(function (result) { DisplayData(result); });
     //創建 一個函式作展示 資料呈現
     function DisplayData(data) {
         for (var i = 0; i < data.length; i++) {
@@ -172,22 +172,22 @@
     //    }
 
     //});
-    const { createApp } = Vue //建立一個Vue實體物件
-    const app = createApp({        
-        data() { // bind data 
-            return {
-                user: []
-            }
-        },
-        mounted: () =>{
-                    //使用axios 方法 抓取 資料 至 前端 處理
-                    axios.get("/UserList/GetAll").then(function (res) { self.user = res.data });
+    //const { createApp } = Vue //建立一個Vue實體物件
+    //const app = createApp({        
+    //    data() { // bind data 
+    //        return {
+    //            user: []
+    //        }
+    //    },
+    //    mounted: () =>{
+    //                //使用axios 方法 抓取 資料 至 前端 處理
+    //                axios.get("UserList/GetAll").then(function (res) { self.user = res.data });
         
-        }
+    //    }
 
-    })
+    //})
 
 
-    app.mount('#t1') //綁定元素
+    //app.mount('#t1') //綁定元素
 
 </script>

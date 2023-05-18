@@ -7,7 +7,7 @@ Log.Logger = new LoggerConfiguration()
                         .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Warning)    // Microsoft.AspNetCore開頭的類別等級為warning
                         .Enrich.FromLogContext()
                         .WriteTo.Console()
-                        //   .WriteTo.Seq("http://localhost:5341/") // 線上使用紀錄
+                        .WriteTo.Seq("http://localhost:5341/") // 線上使用紀錄
                         .CreateLogger();
 try
 {

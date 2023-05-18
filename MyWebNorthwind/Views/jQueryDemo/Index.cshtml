@@ -101,7 +101,7 @@
 
             $.ajax({
                 type: "POST", //使用 POST 
-                url: "/jQueryDemo/AjaxMethod", // 到哪???要什麼?
+                url: "jQueryDemo/AjaxMethod", // 到哪???要什麼?
                 data: { "sessionName": $("#txtSessionName").val() }, //綁定值
                 success: function (response) { //成功的話
                     if (response != null) {
