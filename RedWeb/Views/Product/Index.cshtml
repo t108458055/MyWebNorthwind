@@ -1,0 +1,30 @@
+﻿<div id="c1" class="container">
+    <div class="row">
+        <div class="col-4" v-for="item in productList">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" v-bind:src="item.path" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.title}}</h5>
+                    <h5 class="card-title">{{item.price}}</h5>
+                    <p class="card-text">{{item.desc}}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#c1',
+        data: {
+            productList: []
+        },
+        mounted: function () {
+            var self = this;
+            axios.get("/product/GetAllProduct").then(function (res) {
+                self.productList = res.data;
+            })
+        }
+    });
+</script>
